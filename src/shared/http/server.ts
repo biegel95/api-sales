@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import 'dotenv/config';
 import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
 import cors from 'cors';
@@ -38,6 +39,7 @@ app.use(
     },
 );
 
-app.listen(5000, () => {
-    console.log('server started on port 5000');
+app.listen(process.env.APP_API_PORT, () => {
+    // eslint-disable-next-line no-console
+    console.log(`server started on port ${process.env.APP_API_PORT}`);
 });
