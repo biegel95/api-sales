@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+    app:
+        build: .
+        container_name: api-with-typeorm
+        ports:
+            - "5000:5000"
+        volumes:
+            - .:/home/node/app
+        depends_on:
+            - db
+            - redis
+        command: bash -c "npm install && npm run typeorm migration:run && npm run dev"
+    db:
+        image: postgres
+        container_name: postgres-with-typeorm
+        ports:
+            - "5532:5432"
+        volumes:
+            - ./postgres:/postgres
+            - /var/lib/postgresql/data
+        environment:
+            - POSTGRES_PASSWORD=docker
+            - POSTGRES_DB=apiwithtypeorm
+    redis:
+        image: redis
+        container_name: 'redis-with-typeorm'
+        ports:
+            - "6379:6379"
